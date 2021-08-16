@@ -23,3 +23,10 @@ export const ButtonAction = styled.div`
   justify-content: center;
   width: 100%;
 `
+export const ImagemModal = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 9%;
+`

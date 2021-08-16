@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Form, Table, Button, Modal } from "react-bootstrap"
+import { Form, Table, Button, Modal, Image, Pagination } from "react-bootstrap"
 
 import {
   FullContainer,
@@ -7,6 +7,7 @@ import {
   Busca,
   FullTabela,
   ButtonAction,
+  ImagemModal,
 } from "./Styles"
 
 import api from "../api/api"
@@ -15,9 +16,15 @@ function Index() {
   const [dados, setDados] = useState([])
   const [page, setPage] = useState([])
   const [show, setShow] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleClose = () => setShow(false)
-  const handleShow = () => setShow(true)
+  async function handleShow(dados) {
+    console.log(dados)
+    //const response = await api.get(`?id=${usuario.login.uuid}`)
+    //console.log(response)
+    setShow(true)
+  }
 
   useEffect(() => {
     getDados()
@@ -27,9 +34,12 @@ function Index() {
     const response = await api.get("?results=50")
     const docs = response.data
 
-    setDados(docs)
-    console.log(dados.results)
+    setDados(docs.results)
+    setLoading(true)
+    console.log(dados)
   }
+
+  function orderByName() {}
 
   return (
     <FullContainer>
@@ -47,43 +57,60 @@ function Index() {
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>Name</th>
+              <th onClick={orderByName}>Name</th>
               <th>Gender</th>
               <th>Birth</th>
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>Marcus</td>
-              <td>Masc</td>
-              <td>28</td>
-              <td>
-                <ButtonAction>
-                  <Button variant="outline-primary" onClick={handleShow}>
-                    Show
-                  </Button>
 
-                  <Modal show={show} onHide={handleClose} animation={false}>
-                    <Modal.Header closeButton>
-                      <Modal.Title>Modal heading</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      Woohoo, you're reading this text in a modal!
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button variant="secondary" onClick={handleClose}>
-                        Close
+          {dados.map((dados) => (
+            <>
+              <tbody>
+                <tr key={dados.id.value}>
+                  <td>{dados.name.first}</td>
+                  <td>{dados.gender}</td>
+                  <td>{dados.dob.age}</td>
+                  <td>
+                    <ButtonAction>
+                      <Button variant="outline-primary" onClick={handleShow}>
+                        Show
                       </Button>
-                      <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                      </Button>
-                    </Modal.Footer>
-                  </Modal>
-                </ButtonAction>
-              </td>
-            </tr>
-          </tbody>
+
+                      <Modal show={show} onHide={handleClose} animation={false}>
+                        <Modal.Header closeButton>
+                          <ImagemModal>
+                            <Image src={dados.picture.medium} roundedCircle />
+                          </ImagemModal>
+                        </Modal.Header>
+                        <Modal.Body>
+                          <p>Título: {dados.name.title} </p>
+                          <p>Primeiro nome: {dados.name.first} </p>
+                          <p>Último nome:{dados.name.last}</p>
+                          <p>Email: {dados.email}</p>
+                          <p>Gênero: {dados.gender}</p>
+                          <p>Data de nascimento: {dados.dob.date}</p>
+                          <p>Telefone: {dados.cell} </p>
+                          <p>Nacionalidade: {dados.nat}</p>
+                          <p>
+                            Endereço: {dados.location.street.name} -{" "}
+                            {dados.location.street.number} {dados.location.city}{" "}
+                            - {dados.location.state} {dados.location.country}
+                          </p>
+                          <p>ID: {dados.id.value}</p>
+                        </Modal.Body>
+                      </Modal>
+                    </ButtonAction>
+                  </td>
+                </tr>
+              </tbody>
+            </>
+          ))}
+          <Pagination>
+            <Pagination.Prev />
+            <Pagination.Ellipsis />
+            <Pagination.Next />
+          </Pagination>
         </Table>
       </FullTabela>
     </FullContainer>
