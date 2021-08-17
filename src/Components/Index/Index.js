@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Form, Table, Button, Modal, Image, Pagination } from "react-bootstrap"
+import { Form, Table, Button, Modal, Image } from "react-bootstrap"
 
 import {
   FullContainer,
@@ -16,15 +16,8 @@ function Index() {
   const [dados, setDados] = useState([])
   const [page, setPage] = useState([])
   const [show, setShow] = useState(false)
-  const [loading, setLoading] = useState(false)
 
   const handleClose = () => setShow(false)
-  async function handleShow(dados) {
-    console.log(dados)
-    //const response = await api.get(`?id=${usuario.login.uuid}`)
-    //console.log(response)
-    setShow(true)
-  }
 
   useEffect(() => {
     getDados()
@@ -34,9 +27,13 @@ function Index() {
     const response = await api.get("?results=50")
     const docs = response.data
 
+    setPage(docs.info.page)
     setDados(docs.results)
-    setLoading(true)
-    console.log(dados)
+  }
+  async function handleShow() {
+    //const response = await api.get(`?id=${this.state.dados.id.value}`)
+    //console.log(response)
+    setShow(true)
   }
 
   function orderByName() {}
@@ -106,11 +103,6 @@ function Index() {
               </tbody>
             </>
           ))}
-          <Pagination>
-            <Pagination.Prev />
-            <Pagination.Ellipsis />
-            <Pagination.Next />
-          </Pagination>
         </Table>
       </FullTabela>
     </FullContainer>
