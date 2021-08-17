@@ -54,7 +54,7 @@ function Index() {
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th onClick={orderByName}>Name</th>
+              <th onClick={orderByName}>Name {page}</th>
               <th>Gender</th>
               <th>Birth</th>
               <th>Actions</th>
