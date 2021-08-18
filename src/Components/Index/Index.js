@@ -83,7 +83,6 @@ function Index() {
                 placeholder="Searching"
                 onChange={(e) => setSearch(e.target.value)}
               />
-              {search}
             </Form>
           </Busca>
           <FullTabela>
