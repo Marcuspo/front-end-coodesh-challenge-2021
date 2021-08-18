@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Form, Table, Button, Modal, Image, Spinner } from "react-bootstrap"
+import { Form, Table, Button, Spinner } from "react-bootstrap"
 
 import {
   FullContainer,
@@ -7,7 +7,6 @@ import {
   Busca,
   FullTabela,
   ButtonAction,
-  ImagemModal,
   Pagination,
 } from "./Styles"
 
@@ -16,12 +15,8 @@ import api from "../api/api"
 function Index() {
   const [dados, setDados] = useState([])
   const [loading, setLoading] = useState(true)
-  const [newDados, setNewDados] = useState({})
   const [page, setPage] = useState([])
-  const [show, setShow] = useState(false)
   const [search, setSearch] = useState("")
-
-  const handleClose = () => setShow(false)
 
   useEffect(() => {
     getDados()
