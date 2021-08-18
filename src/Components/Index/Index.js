@@ -32,9 +32,7 @@ function Index() {
   }
 
   async function handleShow(id) {
-    setNewDados(id)
-    console.log(newDados)
-    setShow(true)
+    console.log(id)
   }
 
   async function nextPage() {
