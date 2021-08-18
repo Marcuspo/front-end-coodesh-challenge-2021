@@ -30,10 +30,11 @@ function Index() {
     setDados(docs.results)
     setLoading(false)
   }
-  async function handleShow(id) {
-    const response = await api.get(`?id=${id}`)
 
-    console.log(response)
+  async function handleShow(id) {
+    setNewDados(id)
+    console.log(newDados)
+    setShow(true)
   }
 
   async function nextPage() {
@@ -104,7 +105,7 @@ function Index() {
                           <Button
                             variant="outline-primary"
                             onClick={() => {
-                              handleShow(dados.id.value)
+                              handleShow(dados)
                             }}
                           >
                             Show
@@ -117,6 +118,7 @@ function Index() {
               </tbody>
             </Table>
           </FullTabela>
+
           <Pagination>
             <Button onClick={previousPage}>Página Anterior</Button>
             <Button onClick={nextPage}>Próxima página</Button>
