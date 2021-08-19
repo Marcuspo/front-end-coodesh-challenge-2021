@@ -26,6 +26,8 @@ function Index() {
     const response = await api.get("?results=50&sort_by")
     const docs = response.data
 
+    docs.results.sort((a, b) => (a.name.first > b.name.first ? 1 : -1))
+
     setPage(docs.info.page)
     setDados(docs.results)
     setLoading(false)
@@ -40,6 +42,8 @@ function Index() {
 
     const docs = response.data
 
+    docs.results.sort((a, b) => (a.name.first > b.name.first ? 1 : -1))
+
     setDados(docs.results)
     setPage(docs.info.page)
   }
@@ -49,8 +53,15 @@ function Index() {
 
     const docs = response.data
 
+    docs.results.sort((a, b) => (a.name.first > b.name.first ? 1 : -1))
+
     setDados(docs.results)
     setPage(docs.info.page)
+  }
+
+  async function handleOrder(id) {
+    id.sort((a, b) => (a.name.first > b.name.first ? 1 : -1))
+    console.log(id)
   }
 
   const filteredNames = dados.filter((names) => {
@@ -83,7 +94,13 @@ function Index() {
             <Table striped bordered hover>
               <thead>
                 <tr>
-                  <th>Name</th>
+                  <th
+                    onClick={() => {
+                      handleOrder(dados)
+                    }}
+                  >
+                    Name
+                  </th>
                   <th>Gender</th>
                   <th>Birth</th>
                   <th>Actions</th>
