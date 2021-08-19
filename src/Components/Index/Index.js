@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Form, Table, Button, Spinner } from "react-bootstrap"
+import { Form, Table, Button, Spinner, Modal, Image } from "react-bootstrap"
 
 import {
   FullContainer,
@@ -8,6 +8,9 @@ import {
   FullTabela,
   ButtonAction,
   Pagination,
+  ImagemModal,
+  Modals,
+  TextModal,
 } from "./Styles"
 
 import api from "../api/api"
@@ -16,7 +19,9 @@ function Index() {
   const [dados, setDados] = useState([])
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState([])
+  const [show, setShow] = useState(false)
   const [search, setSearch] = useState("")
+  const [newDados, setNewDados] = useState(null)
 
   useEffect(() => {
     getDados()
@@ -34,6 +39,8 @@ function Index() {
   }
 
   async function handleShow(id) {
+    setShow(true)
+    setNewDados(id)
     console.log(id)
   }
 
@@ -131,6 +138,55 @@ function Index() {
                   </tr>
                 ))}
               </tbody>
+
+              {newDados && (
+                <Modal
+                  show={show}
+                  onHide={() => setShow(false)}
+                  dialogClassName="modal-90w"
+                >
+                  <Modals>
+                    <Modal.Header>
+                      <Modal.Title>
+                        <ImagemModal>
+                          <Image src={newDados.picture.medium} roundedCircle />
+                        </ImagemModal>
+                        {newDados.name.title} {newDados.name.first}{" "}
+                        {newDados.name.last}
+                      </Modal.Title>
+                    </Modal.Header>
+                  </Modals>
+                  <Modal.Body>
+                    <TextModal>
+                      <p>
+                        <strong>Email</strong>: {newDados.email}
+                      </p>
+                      <p>
+                        <strong>Gênero</strong>: {newDados.gender}
+                      </p>
+                      <p>
+                        <strong>Data de nascimento</strong>: {newDados.dob.date}
+                      </p>
+                      <p>
+                        <strong>Telefone</strong>: {newDados.cell}{" "}
+                      </p>
+                      <p>
+                        <strong>Nacionalidade</strong>: {newDados.nat}
+                      </p>
+                      <p>
+                        <strong>Endereço</strong>:{" "}
+                        {newDados.location.street.name} -{" "}
+                        {newDados.location.street.number}{" "}
+                        {newDados.location.city} - {newDados.location.state}{" "}
+                        {newDados.location.country}
+                      </p>
+                      <p>
+                        <strong>ID</strong>: {newDados.id.value}
+                      </p>
+                    </TextModal>
+                  </Modal.Body>
+                </Modal>
+              )}
             </Table>
           </FullTabela>
           Página atual: {page}

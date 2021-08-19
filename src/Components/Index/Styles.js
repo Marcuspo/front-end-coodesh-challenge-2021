@@ -37,3 +37,12 @@ export const Pagination = styled.div`
   justify-content: center;
   padding-bottom: 15px;
 `
+export const Modals = styled.div`
+  display: flex;
+  justify-content: center;
+  border-bottom: 0px;
+`
+export const TextModal = styled.text`
+  margin: 0px;
+  padding: 0px;
+`
