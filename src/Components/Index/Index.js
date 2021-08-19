@@ -45,7 +45,7 @@ function Index() {
   }
 
   async function previousPage() {
-    const response = await api.get(`/?page=${page}&results=50`)
+    const response = await api.get(`/?page=${page - 1}&results=50`)
 
     const docs = response.data
 
@@ -116,10 +116,31 @@ function Index() {
               </tbody>
             </Table>
           </FullTabela>
-
+          Página atual: {page}
           <Pagination>
-            <Button onClick={previousPage}>Página Anterior</Button>
-            <Button onClick={nextPage}>Próxima página</Button>
+            {page === 1 ? (
+              <>
+                <Button
+                  variant="outline-primary"
+                  disabled
+                  onClick={previousPage}
+                >
+                  Página Anterior
+                </Button>
+                <Button variant="outline-primary" onClick={nextPage}>
+                  Próxima página
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="outline-primary" onClick={previousPage}>
+                  Página Anterior
+                </Button>
+                <Button variant="outline-primary" onClick={nextPage}>
+                  Próxima página
+                </Button>
+              </>
+            )}
           </Pagination>
         </div>
       )}
