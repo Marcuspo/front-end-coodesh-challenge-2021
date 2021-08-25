@@ -5,6 +5,7 @@ Sistema com busca de dados em API com usuários randômicos e exibição em tabe
 ## Linguagens usadas:
 
  - React
+    - Axios
     - Bootstrap
     - React-Bootstrap
     - Styled-components
