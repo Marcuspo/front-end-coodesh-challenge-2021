@@ -1,6 +1,6 @@
 # Projeto Codesh - Front-end Challenge 2021
 
-Sistema com busca de dados em API com usuários randômicos e exibição em tabela.
+Sistema com busca de dados em API com usuários randômicos e exibição em tabela..
 
 ## Linguagens usadas:
 
